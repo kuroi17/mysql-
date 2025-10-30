@@ -31,7 +31,7 @@ SELECT * FROM Enrollments WHERE Grade BETWEEN 75 AND 90;
 -- 9. Retrieve all enrollments made between '2023-01-01' and '2023-06-30'
 SELECT * FROM Enrollments WHERE Enrollment_Date BETWEEN '2023-01-01' AND '2023-06-30';
 
--- 10 TO 11 IS COMBINATION CONDITIONS --
+-- 10 TO 11 IS COMBINATION CONDITIONS--
 -- 10. Retrieve all students enrolled in BSCS whose last name starts with 'S'
 SELECT * FROM Students
 WHERE Program = 'BSCS' AND Last_Name LIKE 'S%';
