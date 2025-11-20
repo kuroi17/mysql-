@@ -1,0 +1,137 @@
+-- create database
+create database if not exists `IT2101_Ponce_UniversityDB`;
+use `IT2101_Ponce_UniversityDB`;
+
+-- A. Create tables
+-- 1. Student table
+create table Student (StudentID varchar(6) primary key, Student_FName varchar(15), Student_LName varchar(15),DateOfBirth date
+);
+
+-- 2. Instructor table
+create table Instructor (
+    InstructorID varchar(6) primary key,
+    Instructor_FName varchar(15),
+    Instructor_LName varchar(15)
+);
+
+-- 3. Course table
+create table Course (
+    CourseCode varchar(5) primary key,
+    CourseTitle varchar(30)
+);
+
+-- 4. Teaching table
+create table Teaching (
+    InstructorID varchar(6),
+    CourseCode varchar(5),
+    foreign key (InstructorID) references Instructor(InstructorID),
+    foreign key (CourseCode) references Course(CourseCode)
+);
+
+-- 5. StudentGrade table
+create table StudentGrade (
+    StudentID varchar(6),
+    CourseCode varchar(5),
+    Grade decimal(4,2),
+    foreign key (StudentID) references Student(StudentID),
+    foreign key (CourseCode) references Course(CourseCode)
+);
+
+-- B. Insert data for each table
+-- 6. Insert Student data
+insert into Student (StudentID, Student_FName, Student_LName, DateOfBirth) values
+('ST1001', 'Maria', 'Santos', '2002-05-14'),
+('ST1002', 'John', 'Delacruz', '2001-11-23'),
+('ST1003', 'Angela', 'Ramirez', '2003-02-10'),
+('ST1004', 'Mark', 'Villanueva', '2000-09-05'),
+('ST1005', 'Ella', 'Bautista', '2002-07-18'),
+('ST1006', 'Carlo', 'Fernandez', '2001-04-27'),
+('ST1007', 'Nicole', 'Mendoza', '2003-03-12'),
+('ST1008', 'Ryan', 'Torres', '2000-12-30'),
+('ST1009', 'Jasmine', 'Cruz', '2002-01-08'),
+('ST1010', 'Kevin', 'Reyes', '2001-06-21');
+
+-- 7. Insert Instructor data
+insert into Instructor (InstructorID, Instructor_FName, Instructor_LName) values
+('INS001', 'Roberto', 'Garcia'),
+('INS002', 'Liza', 'Morales'),
+('INS003', 'Patrick', 'Domingo'),
+('INS004', 'Catherine', 'Lim'),
+('INS005', 'Joseph', 'Castro'),
+('INS006', 'Vanessa', 'Ramos');
+
+-- 8. Insert Course data
+insert into Course (CourseCode, CourseTitle) values
+('CS102', 'Computer Programming Fundament'),
+('IT101', 'Introduction to Information Te'),
+('IT211', 'Database Management Systems'),
+('IT312', 'Web Development'),
+('IT313', 'Systems Analysis and Design'),
+('IT402', 'Software Engineering'),
+('NT202', 'Computer Networks');
+
+-- 9. Insert Teaching data
+insert into Teaching (InstructorID, CourseCode) values
+('INS001', 'IT101'),
+('INS002', 'CS102'),
+('INS003', 'IT211'),
+('INS004', 'NT202'),
+('INS005', 'IT312'),
+('INS006', 'IT402'),
+('INS003', 'IT313');
+
+-- 10. Insert StudentGrade data
+insert into StudentGrade (StudentID, CourseCode, Grade) values
+('ST1001', 'IT101', 90.25),
+('ST1001', 'CS102', 88.75),
+('ST1002', 'IT211', 85.50),
+('ST1003', 'IT312', 91.30),
+('ST1004', 'NT202', 86.00),
+('ST1005', 'IT402', 92.40),
+('ST1005', 'IT313', 89.10),
+('ST1006', 'IT101', 87.25),
+('ST1008', 'CS102', 84.50),
+('ST1010', 'IT211', 90.00);
+
+-- C. Apply Data Manipulation Commands
+-- 11. Update the last name of student with StudentID = 'ST1001' to "Laraya"
+update Student
+set Student_LName = 'Laraya'
+where StudentID = 'ST1001';
+
+-- 12. Delete all students whose grade is below 75
+delete from StudentGrade
+where Grade < 75;
+
+-- D. Queries
+-- 13. Display all students born after December 31, 2001
+select * from Student
+where DateOfBirth > '2001-12-31';
+
+-- 14. Display all student's grades >= 90
+select * from StudentGrade
+where Grade >= 90;
+
+-- 15. Display all instructors whose last name ends with 's'
+select * from Instructor
+where Instructor_LName like '%s';
+
+-- 16. Display all grades between 88 and 91
+select * from StudentGrade
+where Grade between 88 and 91;
+
+-- 17. Display all grades for IT101, CS102, IT211
+select * from StudentGrade
+where CourseCode in ('IT101', 'CS102', 'IT211');
+
+-- 18. Display all students whose last name is Bautista or Fernandez
+select * from Student
+where Student_LName in ('Bautista', 'Fernandez');
+
+-- 19. Display all students born between 2000 and 2001
+select * from Student
+where DateOfBirth between '2000-01-01' and '2001-12-31';
+
+-- 20. Display first and last name of all students
+select Student_FName, Student_LName
+from Student;
